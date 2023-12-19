@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Latest Video</title>
+  <link rel="icon" type="image/x-icon" href="favcon.png">
+  <style>
+    /* Basic CSS for the navigation */
+    nav {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 20px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    /* Adjust iframe styling */
+    iframe {
+      display: block;
+      width: 100%;
+      height: calc(100vh - 50px); /* Adjust height to leave space for the navigation */
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="left-links">
+      <a href="https://discord.gg/jRSz4AJjAw">Discord</a>
+      <a href="https://www.tiktok.com/@sketch_494">TikTok</a>
+      <a href="https://www.youtube.com/@sketch494">YouTube</a>
+      <a href="https://www.twitch.tv/sketch494">Twitch</a>
+    </div>
+  
+  <div class="centered-nav">
+    <a href="videos.html">Videos</a>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+  </div>
+</nav>
+  
+  <div class="right-links">
+    <!-- Add any additional right-aligned links here -->
+  </div>
+</nav>
+
+<!-- Embedded YouTube video container -->
+<div id="video-container">
+  <!-- Newest video will be loaded here -->
+</div>
+
+<!-- Script to fetch the newest video ID and embed it -->
+<script>
+  // Fetch the newest video using the YouTube Data API
+  const apiKey = 'AIzaSyBdCE0jekKt3Tch55cBar-wEf5UmTOKn9M'; // Replace with your YouTube Data API key
+  const channelId = 'UCx7tzeg2_Apssr5Hsh3naUw'; // Replace with your YouTube channel ID
+
+  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&key=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      const videoId = data.items[0].id.videoId;
+      const videoContainer = document.getElementById('video-container');
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}`;
+      iframe.width = '100%';
+      iframe.height = '100%';
+      iframe.frameBorder = '0';
+      videoContainer.appendChild(iframe);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+</script>
+
+</body>
+</html>
